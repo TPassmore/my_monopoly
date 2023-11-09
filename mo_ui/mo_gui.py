@@ -1,6 +1,7 @@
+print("GUI")
 from PySide6 import QtWidgets, QtGui
 from pp_core.pp_system import pp_file
-from Monopoly.mo_ui import mo_board, mo_board_pieces
+from my_monopoly.mo_ui import mo_board, mo_board_pieces
 
 
 

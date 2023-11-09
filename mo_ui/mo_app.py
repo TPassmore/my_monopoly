@@ -1,7 +1,7 @@
 import sys
 from PySide6 import QtWidgets
-from Monopoly.mo_ui import mo_gui
-
+from my_monopoly.mo_ui import mo_gui
+print("here")
 
 class App(QtWidgets.QApplication):
 

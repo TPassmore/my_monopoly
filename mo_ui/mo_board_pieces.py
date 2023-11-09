@@ -72,7 +72,7 @@ class Corner_piece(Board_piece):
 
 class Community_chest(Non_property_piece):
     
-    icon_path = "Monopoly/mo_assets/mo_png/community_chest.png"
+    icon_path = "my_monopoly/mo_assets/mo_png/community_chest.png"
     
     def __init__(self):
         super().__init__("Community Chest", self.icon_path, "take a card")
