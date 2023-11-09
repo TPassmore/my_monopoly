@@ -8,7 +8,7 @@ cards_in_a_row = 13
 total_width = cards_in_a_row*card_width
 
 properties_dict = mo_properties.properties_dict
-print("board")
+
 # TODO: implement a queue system to take the board information from a json/list of tuples
 # TODO: Add a dictionary (id: object) system to link the model and gui
 
@@ -105,7 +105,6 @@ class Board_row(QtWidgets.QWidget):
         if has_corners: self._layout.addWidget(corner_piece)
         for i in range(1, 10):
             if i in row_layout:
-                print(i)
                 self._layout.addWidget(self.get_next_property())
             else:
                 # TODO: Change this to include the other pieces, such as tax and the trains
