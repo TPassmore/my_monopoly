@@ -19,9 +19,9 @@ class Board(QtWidgets.QWidget):
         self.init_ui()
 
     def init_ui(self):
-        graphicsview = QtWidgets.QGraphicsView()
-        scene = QtWidgets.QGraphicsScene(graphicsview)
-        graphicsview.setScene(scene)
+        self.graphicsview = QtWidgets.QGraphicsView()
+        scene = QtWidgets.QGraphicsScene(self.graphicsview)
+        self.graphicsview.setScene(scene)
         scene.setSceneRect(0, 0, total_width, total_width)
 
         layout = QtWidgets.QVBoxLayout(self)
@@ -33,15 +33,16 @@ class Board(QtWidgets.QWidget):
         h_layout.setSpacing(0)
 
         print(properties_dict[1])
-        row_1 = Board_row(properties_dict[1])
-        self.row_2 = Board_row(properties_dict[2], has_corners=False, rotate=90)
+        row_1 = Board_row(properties_dict[2], rotate=180)
+        self.row_2 = Board_row(properties_dict[4], has_corners=False, rotate=90)
         self.row_3 = Board_row(properties_dict[3], has_corners=False, rotate=270)
-        row_4 = Board_row(properties_dict[4])
+        row_4 = Board_row(properties_dict[1])
         print(properties_dict[1])
 
         proxy = QtWidgets.QGraphicsProxyWidget()
         proxy.setWidget(row_1)
-        proxy.setPos(0, 0)
+        proxy.setPos(total_width, card_height)
+        proxy.setRotation(180)
         scene.addItem(proxy)
 
         proxy = QtWidgets.QGraphicsProxyWidget()
@@ -65,20 +66,11 @@ class Board(QtWidgets.QWidget):
         proxy.setPos(0, 11 * card_width)
         scene.addItem(proxy)
 
-        layout.addWidget(graphicsview)
-        
-        # graphicsview.fitInView(0, 0, 1500, 1500, aspectRadioMode=QtGui.Qt.IgnoreAspectRatio)
-
-        # layout.addWidget(row_1)
-        # h_layout.addWidget(self.row_2, stretch=1)
-        # h_layout.addWidget(QtWidgets.QWidget(), stretch=3)
-        # h_layout.addWidget(self.row_3, stretch=1)
-        # layout.addLayout(h_layout)
-        # layout.addWidget(row_4)
-        # layout.addWidget(test)
+        layout.addWidget(self.graphicsview)
 
         
-
+    def rotate_board(self, angle=90):
+        self.graphicsview.rotate(angle)
 
 class Board_row(QtWidgets.QWidget):
 
