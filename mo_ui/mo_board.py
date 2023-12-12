@@ -112,21 +112,3 @@ class Board_row(QtWidgets.QWidget):
         
         if has_corners: self._layout.addWidget(mo_board_pieces.Corner_piece())
         
-
-    # def paintEvent(self, event):
-    #     if self.rotate is not None:
-    #         print("here")
-    #         painter = QtGui.QPainter(self)
-            
-    #         # Calculate the rotation angle in radians
-    #         radians = self.rotate * (3.141592653589793 / 180.0)
-            
-    #         # Create a transformation matrix for rotation
-    #         transform = QtGui.QTransform()
-    #         transform.rotate(self.rotate)
-            
-    #         # Apply the transformation to the painter
-    #         painter.setTransform(transform)
-            
-    #         # Draw whatever you want here, it will be rotated
-    #         painter.drawText(0, 0, "Rotated Text")
