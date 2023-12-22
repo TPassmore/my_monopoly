@@ -11,10 +11,9 @@ class Board_piece(QtWidgets.QDialog):
         super().__init__()
         self.setFixedSize(card_width, card_height)
         self.setObjectName("MasterPiece")
-        self.setStyleSheet(f"#MasterPiece {{border: {border}px solid black; background-color: #b9e7f0}}")
+        self.setStyleSheet(f"#MasterPiece {{border-top: {border}px solid black; border-bottom: {border}px solid black; border-right: {border}px solid black; background-color: #b9e7f0}}")
 
-
-
+        # self.setStyleSheet(f"#MasterPiece {{border: {border}px solid black; background-color: #b9e7f0}}")
 
 class Property_piece(Board_piece):
     
@@ -31,7 +30,7 @@ class Property_piece(Board_piece):
 
         color_widget = QtWidgets.QWidget()
         color_widget.setObjectName("FamilyColor")
-        color_widget.setStyleSheet(f"#FamilyColor {{background-color: {family_color}; margin: {border}px;}}")
+        color_widget.setStyleSheet(f"#FamilyColor {{background-color: {family_color}; margin-right: {border}px; margin-top: {border}px;}}")
         color_widget.setFixedSize(card_width, card_height*0.2)
 
         piece_name = QtWidgets.QLabel(name)
@@ -69,6 +68,10 @@ class Corner_piece(Board_piece):
     def __init__(self):
         super().__init__()
         self.setFixedWidth(card_width*2)
+        self.setObjectName("CornerPiece")
+        # TODO: Adjust borders per piece
+        self.setStyleSheet(f"#CornerPiece {{border-left: {border}px solid black; border-bottom: {border}px solid black; border-right: {border}px solid black; background-color: #b9e7f0}}")
+
 
 class Community_chest(Non_property_piece):
     

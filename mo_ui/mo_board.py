@@ -32,10 +32,10 @@ class Board(QtWidgets.QWidget):
         h_layout.setContentsMargins(0, 0, 0, 0)
         h_layout.setSpacing(0)
 
-        pos = (0, 0) #(total_width, card_height)
+        pos = (0, 0) 
         self.row_1 = Board_row(properties_dict[2], rotate=180, pos=pos)
         
-        pos = ((card_width * 7.5) - 11 * card_width, card_width * 5.5)
+        pos = (- (card_width * 3.5), card_width * 5.5) # (card_width * 7.5) - 11 * card_width
         self.row_2 = Board_row(properties_dict[4], has_corners=False, rotate=90, pos=pos)
         
         pos = (card_width*7.5, card_width * 5.5)
