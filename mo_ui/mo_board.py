@@ -20,9 +20,9 @@ class Board(QtWidgets.QWidget):
 
     def init_ui(self):
         self.graphicsview = QtWidgets.QGraphicsView()
-        scene = QtWidgets.QGraphicsScene(self.graphicsview)
-        self.graphicsview.setScene(scene)
-        scene.setSceneRect(0, 0, total_width, total_width)
+        self.scene = QtWidgets.QGraphicsScene(self.graphicsview)
+        self.graphicsview.setScene(self.scene)
+        self.scene.setSceneRect(0, 0, total_width, total_width)
 
         layout = QtWidgets.QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -32,51 +32,51 @@ class Board(QtWidgets.QWidget):
         h_layout.setContentsMargins(0, 0, 0, 0)
         h_layout.setSpacing(0)
 
-        print(properties_dict[1])
-        row_1 = Board_row(properties_dict[2], rotate=180)
-        self.row_2 = Board_row(properties_dict[4], has_corners=False, rotate=90)
-        self.row_3 = Board_row(properties_dict[3], has_corners=False, rotate=270)
-        row_4 = Board_row(properties_dict[1])
-        print(properties_dict[1])
-
-        proxy = QtWidgets.QGraphicsProxyWidget()
-        proxy.setWidget(row_1)
-        proxy.setPos(total_width, card_height)
-        proxy.setRotation(180)
-        scene.addItem(proxy)
-
-        proxy = QtWidgets.QGraphicsProxyWidget()
-        proxy.setWidget(self.row_2)
-        proxy.setTransformOriginPoint(proxy.boundingRect().center())
-        proxy.setPos((card_width * 7.5) - 11 * card_width, card_width * 5.5)
-        proxy.setRotation(90)
+        pos = (0, 0) #(total_width, card_height)
+        self.row_1 = Board_row(properties_dict[2], rotate=180, pos=pos)
         
-        scene.addItem(proxy)
-
-        proxy = QtWidgets.QGraphicsProxyWidget()
-        proxy.setWidget(self.row_3)
-        proxy.setTransformOriginPoint(proxy.boundingRect().center())
-        proxy.setPos(card_width*7.5, card_width * 5.5)
-        proxy.setRotation(270)
+        pos = ((card_width * 7.5) - 11 * card_width, card_width * 5.5)
+        self.row_2 = Board_row(properties_dict[4], has_corners=False, rotate=90, pos=pos)
         
-        scene.addItem(proxy)
+        pos = (card_width*7.5, card_width * 5.5)
+        self.row_3 = Board_row(properties_dict[3], has_corners=False, rotate=270, pos=pos)
+        
+        pos = (0, 11 * card_width)
+        self.row_4 = Board_row(properties_dict[1], pos=pos)
 
-        proxy = QtWidgets.QGraphicsProxyWidget()
-        proxy.setWidget(row_4)
-        proxy.setPos(0, 11 * card_width)
-        scene.addItem(proxy)
+        self.add_rows()
 
         layout.addWidget(self.graphicsview)
 
+    def add_rows(self):
+        self.scene.clear()
         
+        self.scene.addItem(self.create_row(self.row_1))
+        self.scene.addItem(self.create_row(self.row_2))
+        self.scene.addItem(self.create_row(self.row_3))
+        self.scene.addItem(self.create_row(self.row_4))
+
+    def create_row(self, row_widget):
+        proxy = QtWidgets.QGraphicsProxyWidget()
+        proxy.setWidget(row_widget)
+        proxy.setTransformOriginPoint(proxy.boundingRect().center())
+        proxy.setPos(*row_widget.get_pos())
+        rotation = row_widget.get_rotation()
+        if not rotation is None:
+            print(row_widget, rotation)
+            proxy.setRotation(rotation)
+
+        return proxy
+    
     def rotate_board(self, angle=90):
         self.graphicsview.rotate(angle)
 
 class Board_row(QtWidgets.QWidget):
 
-    def __init__(self, row_properties, has_corners=True, rotate=None):
+    def __init__(self, row_properties, has_corners=True, rotate=None, pos=(0, 0)):
         super().__init__()
         self.rotate = rotate
+        self._pos = pos
         self.init_ui(row_properties, has_corners)
 
     def init_ui(self, row_properties, has_corners):
@@ -111,4 +111,7 @@ class Board_row(QtWidgets.QWidget):
                 self._layout.addWidget(mo_board_pieces.Community_chest())
         
         if has_corners: self._layout.addWidget(mo_board_pieces.Corner_piece())
+
+    def get_rotation(self): return self.rotate
+    def get_pos(self): return self._pos
         
